@@ -32,12 +32,13 @@ abstract class ContentPageController extends Controller
         $key = Str::snake(class_basename($this->model())).'_content_'.app()->getLocale();
 
         $content = Cache::rememberForever($key, function () {
-            $data = ($this->model())::with(['media', 'seo'])->first();
+            $model = $this->model();
+            $data = $model::with(['media', 'seo'])->first();
 
-            return $data?->toArray();
+            return $data ? $data->toArray() : [];
         });
 
-        $content = $this->transformContent($content);
+        $content = $this->transformContent($content ?? []) ?? [];
 
         return Inertia::render($this->component(), ['content' => $content]);
     }

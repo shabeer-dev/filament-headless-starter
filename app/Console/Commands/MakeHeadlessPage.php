@@ -415,30 +415,32 @@ import FooterCta from '@/components/ui/FooterCta';
 import AppLayout from '@/layouts/AppLayout';
 import type { {$modelName} } from '@/types/content';
 
-export default function {$name}({ content }: { content: {$modelName} }) {
+export default function {$name}({ content }: { content?: {$modelName} }) {
+    const pageContent = content || ({} as {$modelName});
+
     return (
         <>
             <SeoMeta />
 
             <HeroSection
-                content={content}
+                content={pageContent}
                 size="large"
-                media={content.media}
+                media={pageContent.media || []}
                 showWatermark={true}
             />
 
-            {content.features && content.features.length > 0 && (
+            {pageContent.features && pageContent.features.length > 0 && (
                 <section className="py-16 md:py-24 bg-surface border-b border-border">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center max-w-3xl mx-auto mb-12">
-                            <h2 className="text-3xl font-bold text-heading">{content.overview_title || 'Features'}</h2>
-                            {content.overview_description && (
-                                <p className="mt-4 text-body text-lg">{content.overview_description}</p>
+                            <h2 className="text-3xl font-bold text-heading">{pageContent.overview_title || 'Features'}</h2>
+                            {pageContent.overview_description && (
+                                <p className="mt-4 text-body text-lg">{pageContent.overview_description}</p>
                             )}
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {content.features.map((feature, idx) => (
+                            {pageContent.features.map((feature, idx) => (
                                 <div key={idx} className="p-6 rounded-lg border border-border bg-background shadow-xs hover:border-primary transition-colors">
                                     <h3 className="text-xl font-semibold text-heading mb-2">{feature.title}</h3>
                                     <p className="text-body">{feature.description}</p>
@@ -450,10 +452,10 @@ export default function {$name}({ content }: { content: {$modelName} }) {
             )}
 
             <FooterCta
-                route={content.footer_cta_route}
-                title={content.footer_cta_title}
-                buttonText={content.footer_cta_button}
-                media={content.media}
+                route={pageContent.footer_cta_route}
+                title={pageContent.footer_cta_title}
+                buttonText={pageContent.footer_cta_button}
+                media={pageContent.media || []}
             />
         </>
     );

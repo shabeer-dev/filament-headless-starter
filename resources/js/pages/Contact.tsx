@@ -4,20 +4,23 @@ import ContactSection from '@/pages/Contact/partials/ContactSection';
 import HeroSection from '@/components/ui/HeroSection';
 import type { PageContact } from '@/types/content';
 
-export default function Contact({ content }: { content: PageContact }) {
+export default function Contact({ content }: { content?: PageContact }) {
+    const pageContent = content || ({} as PageContact);
+
     return (
         <>
             <SeoMeta />
 
             <HeroSection
-                content={content}
+                content={pageContent}
+                media={pageContent.media || []}
                 breadcrumbs={[
                     { label: 'Home', href: '/' },
                     { label: 'Contact Us' },
                 ]}
             />
 
-            <ContactSection content={content} />
+            <ContactSection content={pageContent} />
         </>
     );
 }
