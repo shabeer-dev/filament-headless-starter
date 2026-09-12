@@ -8,12 +8,14 @@ const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElem
                 <select
                     {...props}
                     ref={ref}
-                    className="w-full cursor-pointer appearance-none rounded-md border border-border bg-white p-3 font-normal text-[15px] text-heading transition-colors outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                    className="w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface p-3.5 pr-10 text-sm font-normal text-heading transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                 >
                     {children}
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-heading">
-                    <Icon name="expand_more" className="text-headline-md" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-muted">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
                 </div>
             </div>
         );
