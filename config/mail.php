@@ -115,6 +115,6 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
-    'admin_address' => env('ADMIN_EMAIL', 'mail@orbizauto.com'),
+    'admin_address' => env('ADMIN_EMAIL', 'admin@example.com'),
 
 ];

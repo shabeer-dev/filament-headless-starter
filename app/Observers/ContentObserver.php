@@ -13,8 +13,7 @@ class ContentObserver
     protected function clearCache($model)
     {
         $className = class_basename($model);
-        // PageHome -> page_home_content
-        // ProductHsrp -> product_hsrp_content
+        // e.g. PageHome -> page_home_content
         $key = Str::snake($className).'_content';
         foreach (config('app.locales', ['en', 'ar']) as $locale) {
             Cache::forget($key.'_'.$locale);
@@ -24,7 +23,7 @@ class ContentObserver
     public function saving($model): void
     {
         // Prevent Filament Translatable or dehydrated forms from trying to save these obsolete media columns to the database
-        $obsoleteMediaColumns = ['hero', 'rfid', 'story', 'intro', 'trust', 'overview', 'footer_cta_bg'];
+        $obsoleteMediaColumns = ['hero', 'story', 'intro', 'trust', 'overview', 'footer_cta_bg'];
         foreach ($obsoleteMediaColumns as $column) {
             if (array_key_exists($column, $model->getAttributes())) {
                 unset($model->{$column});

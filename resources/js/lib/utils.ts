@@ -50,38 +50,6 @@ export function getColSpanClass(
     return COL_SPAN_MAP[span] ?? `md:col-span-${span}`;
 }
 
-export function getSegmentFromUrl(url: string): string | null {
-    if (url.includes('hsrp-safeguards')) {
-return 'hsrp-safeguards';
-}
-
-    if (url.includes('hsrp')) {
-return 'hsrp';
-}
-
-    if (url.includes('international-license-plates')) {
-return 'international-plates';
-}
-
-    if (url.includes('signages')) {
-return 'signages';
-}
-
-    if (url.includes('fun-plates')) {
-return 'fun-plates';
-}
-
-    if (url.includes('embossing-tools')) {
-return 'embossing-tools';
-}
-
-    if (url.includes('production-machines')) {
-return 'production-machinery';
-}
-
-    return null;
-}
-
 export function normalizeStringArray(
     items: any[] | null | undefined,
 ): string[] {

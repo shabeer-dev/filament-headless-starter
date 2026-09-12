@@ -2,33 +2,33 @@ import LegalPageLayout from './LegalPageLayout';
 
 export default function Compliance() {
     return (
-        <LegalPageLayout title="Compliance & Certifications" lastUpdated="June 2, 2026">
-            <h2 className="text-xl font-bold text-primary mt-8 mb-4">1. Commitment to Quality</h2>
+        <LegalPageLayout title="Compliance & Security Standards" lastUpdated="June 2, 2026">
+            <h2 className="text-xl font-bold text-primary mt-8 mb-4">1. Commitment to Security & Quality</h2>
             <p>
-                At ORBIZ Automotivez, we are dedicated to maintaining the highest standards of quality, security, and environmental responsibility 
-                in all our manufacturing processes. Our compliance framework is built upon internationally recognized standards and local regulatory requirements.
+                We are committed to maintaining the highest standards of security, privacy, and architectural resilience
+                across our platform. Our compliance framework is built upon internationally recognized security and data protection standards.
             </p>
 
-            <h2 className="text-xl font-bold text-primary mt-8 mb-4">2. ISO Certifications</h2>
+            <h2 className="text-xl font-bold text-primary mt-8 mb-4">2. Security & Compliance Certifications</h2>
             <p>
-                We proudly operate under strict ISO management systems:
+                Our infrastructure and application lifecycle adhere to rigorous industry benchmarks:
             </p>
             <ul className="list-disc pl-6 mt-4 space-y-2">
-                <li><strong>ISO 9001:2015</strong> - Quality Management Systems ensuring consistent delivery of products that meet customer and regulatory requirements.</li>
-                <li><strong>ISO 14001:2015</strong> - Environmental Management Systems demonstrating our commitment to sustainable and environmentally conscious manufacturing.</li>
-                <li><strong>ISO 7591:1982</strong> - Road vehicles — Retro-reflective registration plates for motor vehicles and trailers — Specification.</li>
+                <li><strong>ISO/IEC 27001</strong> — Information Security Management Systems ensuring systematic protection of confidential client data.</li>
+                <li><strong>SOC 2 Type II</strong> — Comprehensive validation of security, availability, confidentiality, and processing integrity.</li>
+                <li><strong>GDPR & CCPA Compliant</strong> — Full transparency, data portability, and adherence to global consumer privacy rights.</li>
             </ul>
 
-            <h2 className="text-xl font-bold text-primary mt-8 mb-4">3. High Security Registration Plates (HSRP) Compliance</h2>
+            <h2 className="text-xl font-bold text-primary mt-8 mb-4">3. Data Protection & Encryption</h2>
             <p>
-                Our HSRP products are rigorously tested and certified by the Automotive Research Association of India (ARAI) and the 
-                International Centre for Automotive Technology (ICAT). We strictly adhere to Rule 50 of the Central Motor Vehicles Rules, 1989.
+                All data in transit is encrypted using modern TLS 1.3 cryptographic protocols. Data at rest is secured with AES-256 encryption.
+                Regular vulnerability assessments and penetration tests are conducted to ensure enterprise readiness.
             </p>
 
-            <h2 className="text-xl font-bold text-primary mt-8 mb-4">4. International Standards</h2>
+            <h2 className="text-xl font-bold text-primary mt-8 mb-4">4. SLA & High Availability</h2>
             <p>
-                For our global clients, we ensure full compliance with the specific regulatory requirements of each importing country, 
-                including CE marking where applicable, and adherence to European standard DIN 74069.
+                Our distributed edge architecture delivers a 99.9% uptime SLA with real-time health monitoring, automated failover,
+                and zero-downtime deployment pipelines.
             </p>
         </LegalPageLayout>
     );

@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'theme' => env('APP_THEME', 'indigo'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -126,8 +128,8 @@ return [
     ],
 
     'support' => [
-        'phone' => env('SUPPORT_PHONE', '+91 86061 88888'),
-        'email' => env('SUPPORT_EMAIL', 'support@orbizauto.com'),
+        'phone' => env('SUPPORT_PHONE', '+1 (555) 000-0000'),
+        'email' => env('SUPPORT_EMAIL', 'support@example.com'),
     ],
 
     'whatsapp' => [

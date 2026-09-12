@@ -44,7 +44,7 @@ export interface FooterCtaFields {
 
 // ─── Singleton Page Models ───────────────────────────────────────────────────
 
-export interface PageHome extends HeroFields, FooterCtaFields {
+export interface PageHome extends HeroFields, OverviewFields, FooterCtaFields {
     id: number;
     stats?: Array<{
         label: string;

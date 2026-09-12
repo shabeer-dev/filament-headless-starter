@@ -15,10 +15,10 @@ export default function SeoMeta({ noindex = false, title: propTitle, description
         propDesc ||
         content?.seo?.description ||
         content?.hero_description ||
-        'Orbiz Automotivez - Engineering Precision.';
+        `${appName || 'Headless Starter'} — Modern enterprise web platform powered by Filament v5 and React 19.`;
     const keywords =
         content?.seo?.keywords?.join(', ') ||
-        'HSRP, License Plates, Orbiz, Automotive';
+        'Headless CMS, Filament, React 19, Inertia.js, Tailwind CSS, Web Platform';
 
     // Determine the OpenGraph image
     let ogImage = content?.seo?.og_image
@@ -38,16 +38,16 @@ export default function SeoMeta({ noindex = false, title: propTitle, description
         ogImage = `${appUrl}${ogImage}`;
     }
 
-    const fullTitle = `${title} | ${appName || 'Orbiz Automotivez'}`;
+    const fullTitle = `${title} | ${appName || 'Headless Starter'}`;
 
     // Structured Data (JSON-LD) - Organization
     const organizationJsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: appName || 'Orbiz Automotivez',
-        url: appUrl || 'https://orbiz.in',
+        name: appName || 'Headless Starter',
+        url: appUrl || 'https://example.com',
         logo: appUrl ? `${appUrl}/images/logo.png` : '',
-        description: 'Orbiz Automotivez - Engineering Precision. Leading manufacturer of High Security Registration Plates (HSRP) and number plate manufacturing machines.',
+        description: `${appName || 'Headless Starter'} — High-performance enterprise web platform built with Filament v5 and Inertia React.`,
     };
 
     // Structured Data (JSON-LD) - Breadcrumbs

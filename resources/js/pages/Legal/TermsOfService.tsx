@@ -6,7 +6,7 @@ export default function TermsOfService() {
             <h2 className="text-xl font-bold text-primary mt-8 mb-4">1. Agreement to Terms</h2>
             <p>
                 These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") 
-                and ORBIZ Automotivez ("we," "us" or "our"), concerning your access to and use of our website as well as any other media form, 
+                and our organization ("we," "us" or "our"), concerning your access to and use of our website as well as any other media form, 
                 media channel, mobile website or mobile application related, linked, or otherwise connected thereto.
             </p>
 

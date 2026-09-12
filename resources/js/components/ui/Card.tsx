@@ -95,7 +95,7 @@ export default function Card({
         );
     };
 
-    // 1. HORIZONTAL BANNER CARD (e.g. Orbiz Signz)
+    // 1. HORIZONTAL BANNER CARD
     if (isHorizontal) {
         const horizontalElement = (
             <>

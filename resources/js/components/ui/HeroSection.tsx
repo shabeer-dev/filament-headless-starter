@@ -1,222 +1,170 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
-import HeadingLabel from '@/components/ui/HeadingLabel';
-import DisplayHeading from '@/components/ui/DisplayHeading';
-import HeroDescription from '@/components/ui/HeroDescription';
-import HeroActions from '@/components/ui/HeroActions';
-import Icon from '@/components/ui/Icon';
+import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from '@/hooks/useTranslation';
+import Icon from '@/components/ui/Icon';
 import type { HeroFields, MediaItem } from '@/types/content';
 
-interface Breadcrumb {
+export interface BreadcrumbItem {
     label: string;
     href?: string;
 }
 
-interface HeroSectionProps {
-    content: HeroFields;
-    breadcrumbs?: Breadcrumb[];
+export interface HeroSectionProps {
+    content?: Partial<HeroFields> | null;
+    breadcrumbs?: BreadcrumbItem[];
     newLine?: boolean;
     size?: 'standard' | 'large';
     media?: MediaItem[];
-    showWatermark?: boolean;
-    fallbackImage?: string;
-    fallbackVideo?: string;
+    showBadge?: boolean;
+    badgeText?: string;
+    primaryCtaText?: string;
+    primaryCtaHref?: string;
+    secondaryCtaText?: string;
+    secondaryCtaHref?: string;
     children?: React.ReactNode;
 }
 
 export default function HeroSection({
     content,
     breadcrumbs,
-    newLine = true,
     size = 'standard',
     media,
-    showWatermark = false,
-    fallbackImage,
-    fallbackVideo,
-    children
+    showBadge = true,
+    badgeText,
+    primaryCtaText,
+    primaryCtaHref,
+    secondaryCtaText,
+    secondaryCtaHref,
+    children,
 }: HeroSectionProps) {
-    const { t } = useTranslation();
+    const { t, locale } = useTranslation();
+    const { appName } = usePage<any>().props;
 
+    const isLarge = size === 'large';
     const mediaItems = media || (content as any)?.media || [];
     const backgroundMedia = mediaItems?.find(
         (m: MediaItem) => m.collection_name === 'hero',
     );
-    
-    // Determine the container classes based on size
-    const isLarge = size === 'large';
 
-    // Determine effective media (CMS background media or high-resolution fallbacks)
-    const getEffectiveMedia = () => {
-        if (backgroundMedia) {
-            const isVid = backgroundMedia.mime_type?.startsWith('video/') || backgroundMedia.file_name?.match(/\.(mp4|webm|ogg|mov)$/i);
-            return {
-                type: isVid ? 'video' : 'image',
-                url: backgroundMedia.original_url,
-                alt: backgroundMedia.name ? backgroundMedia.name.replace(/[-_]/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) : 'Hero Background',
-            };
-        }
+    const title = content?.hero_title || 'Architected for Scale, Speed, and Autonomy';
+    const highlight = content?.hero_highlighted || '';
+    const description =
+        content?.hero_description ||
+        'A decoupled enterprise architecture combining the effortless admin controls of Filament v5 with the blistering client performance of Inertia.js and React 19.';
 
-        if (fallbackVideo) {
-            return { type: 'video', url: fallbackVideo, alt: 'Hero Video' };
-        }
-        if (fallbackImage) {
-            return { type: 'image', url: fallbackImage, alt: 'Hero Background' };
-        }
-
-        if (isLarge) {
-            return { type: 'video', url: '/images/hero-video.mp4', alt: 'Orbiz Automotivez Global Video' };
-        }
-
-        // Automatic fallback based on breadcrumb labels and title
-        const crumbLabels = (breadcrumbs || []).map((b) => b.label.toLowerCase()).join(' ');
-        const titleStr = `${content.hero_title || ''} ${content.hero_highlighted || ''}`.toLowerCase();
-
-        if (crumbLabels.includes('hsrp') || titleStr.includes('hsrp')) {
-            return { type: 'image', url: '/storage/content/hsrp-2876e.png', alt: 'HSRP Solutions' };
-        }
-        if (crumbLabels.includes('safeguard') || titleStr.includes('safeguard')) {
-            return { type: 'image', url: '/storage/content/hsrp-safeguards-a4c7c.png', alt: 'HSRP Safeguards' };
-        }
-        if (crumbLabels.includes('international') || titleStr.includes('international')) {
-            return { type: 'image', url: '/storage/content/international-license-plates-4fb7b.webp', alt: 'International License Plates' };
-        }
-        if (crumbLabels.includes('machine') || titleStr.includes('machine')) {
-            return { type: 'image', url: '/storage/content/production-line-machines-e3b86.jpeg', alt: 'Production Line Machines' };
-        }
-        if (crumbLabels.includes('fun') || titleStr.includes('fun')) {
-            return { type: 'image', url: '/storage/content/fun-plates-e6482.jpeg', alt: 'Fun Plates' };
-        }
-        if (crumbLabels.includes('emboss') || titleStr.includes('emboss')) {
-            return { type: 'image', url: '/storage/content/embossing-tools-foils-ca009.png', alt: 'Embossing Tools & Foils' };
-        }
-        if (crumbLabels.includes('sign') || titleStr.includes('sign')) {
-            return { type: 'image', url: '/storage/content/orbiz-signz-signages-60748.webp', alt: 'Orbiz Signz Signages' };
-        }
-        if (crumbLabels.includes('global') || titleStr.includes('global')) {
-            return { type: 'image', url: '/images/global-reach-map.png', alt: 'Global Reach' };
-        }
-        if (crumbLabels.includes('technology') || titleStr.includes('technology') || titleStr.includes('rfid')) {
-            return { type: 'image', url: '/images/rfid-feature-image.png', alt: 'RFID Technology' };
-        }
-
-        return { type: 'image', url: '/images/about-us-hero.png', alt: 'Orbiz Automotivez' };
-    };
-
-    const effectiveMedia = getEffectiveMedia();
-    
     return (
         <section
-            className={
+            className={`relative w-full overflow-hidden bento-grid-pattern ${
                 isLarge
-                    ? "relative flex min-h-[85vh] items-center overflow-hidden bg-[#1A1A1A] text-white pt-24 md:pt-32 pb-16 md:pb-24"
-                    : "relative w-full overflow-hidden bg-[#1A1A1A] text-white pt-20 md:pt-28 pb-16 md:pb-24"
-            }
+                    ? 'pt-28 md:pt-40 pb-20 md:pb-32'
+                    : 'pt-24 md:pt-32 pb-16 md:pb-24'
+            }`}
         >
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                {effectiveMedia ? (
-                    <>
-                        <div className="pointer-events-none absolute inset-0 h-full w-full overflow-hidden">
-                            {effectiveMedia.type === 'video' ? (
-                                <video
-                                    autoPlay
-                                    loop
-                                    muted
-                                    playsInline
-                                    className="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000"
-                                    src={effectiveMedia.url}
-                                ></video>
-                            ) : (
-                                <img
-                                    src={effectiveMedia.url}
-                                    alt={effectiveMedia.alt}
-                                    loading="eager"
-                                    className="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000"
-                                />
-                            )}
+            {/* Subtle radial glow matching active theme */}
+            <div className="absolute inset-0 radial-glow pointer-events-none" />
+
+            {/* Optional CMS Uploaded Media */}
+            {backgroundMedia && (
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
+                    {backgroundMedia.mime_type?.startsWith('video/') ? (
+                        <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="w-full h-full object-cover"
+                            src={backgroundMedia.original_url}
+                        />
+                    ) : (
+                        <img
+                            src={backgroundMedia.original_url}
+                            alt=""
+                            className="w-full h-full object-cover"
+                        />
+                    )}
+                    <div className="absolute inset-0 bg-background/80" />
+                </div>
+            )}
+
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Breadcrumbs */}
+                {breadcrumbs && breadcrumbs.length > 0 && (
+                    <nav className="mb-6" aria-label="Breadcrumb">
+                        <ol className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted font-medium">
+                            {breadcrumbs.map((crumb, idx) => (
+                                <React.Fragment key={idx}>
+                                    {idx > 0 && (
+                                        <span className="opacity-40">/</span>
+                                    )}
+                                    <li>
+                                        {crumb.href ? (
+                                            <Link
+                                                href={crumb.href}
+                                                className="hover:text-primary transition-colors"
+                                            >
+                                                {crumb.label}
+                                            </Link>
+                                        ) : (
+                                            <span className="text-heading font-semibold">
+                                                {crumb.label}
+                                            </span>
+                                        )}
+                                    </li>
+                                </React.Fragment>
+                            ))}
+                        </ol>
+                    </nav>
+                )}
+
+                <div className="max-w-3xl">
+                    {/* Modern Pill Status Badge */}
+                    {showBadge && (
+                        <div className="mb-6 animate-fade-up">
+                            <span className="pill-badge">
+                                <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+                                <span>{badgeText || t('Modern Headless Architecture')}</span>
+                            </span>
                         </div>
-                        {/* 35% Opacity #1A1A1A overlay per brand PDF direction */}
-                        <div className="absolute inset-0 bg-[#1A1A1A]/35"></div>
-                        <div className="absolute inset-0 bg-linear-to-t from-[#1A1A1A]/75 via-[#1A1A1A]/20 to-transparent"></div>
-                    </>
-                ) : (
-                    <div className="absolute inset-0 bg-[#1A1A1A] z-0"></div>
-                )}
-                
-                {/* Huge Typographic Watermark */}
-                {showWatermark && (
-                    <div className="pointer-events-none absolute top-1/2 -right-20 hidden -translate-y-1/2 rotate-90 font-display-lg text-display-lg tracking-tighter whitespace-nowrap text-white/5 mix-blend-overlay select-none lg:block">
-                        ORBIZ AUTOMOTIVEZ
-                    </div>
-                )}
-            </div>
-            
-            <div className="relative z-10 w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-                <div className={isLarge ? "grid grid-cols-1 gap-gutter lg:grid-cols-12" : ""}>
-                    <div className={isLarge ? "flex flex-col justify-center lg:col-span-10" : ""}>
-                        {breadcrumbs && breadcrumbs.length > 0 && (
-                            <nav className="mb-6">
-                                <ol className="flex font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant gap-2 items-center">
-                                    {breadcrumbs.map((crumb, index) => (
-                                        <React.Fragment key={index}>
-                                            <li>
-                                                {crumb.href ? (
-                                                    <Link prefetch href={crumb.href} className="hover:text-primary transition-colors">
-                                                        {t(crumb.label)}
-                                                    </Link>
-                                                ) : (
-                                                    <span className="text-primary">{t(crumb.label)}</span>
-                                                )}
-                                            </li>
-                                            {index < breadcrumbs.length - 1 ? (
-                                                <li>
-                                                    <Icon name="chevron_right" className="text-label-sm align-middle rtl:rotate-180" />
-                                                </li>
-                                            ) : null}
-                                        </React.Fragment>
-                                    ))}
-                                </ol>
-                            </nav>
+                    )}
+
+                    {/* Headline */}
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-heading leading-[1.1] animate-fade-up">
+                        {title}{' '}
+                        {highlight && (
+                            <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
+                                {highlight}
+                            </span>
                         )}
-                        
-                        <div className={isLarge ? "" : "mb-10 md:mb-16"}>
-                            {content.hero_label ? <HeadingLabel text={content.hero_label} /> : null}
-                            
-                            <DisplayHeading
-                                as="h1"
-                                text={content.hero_title}
-                                highlighted={content.hero_highlighted}
-                                newLine={newLine}
-                                className="max-w-2xl"
-                            />
-                            
-                            {content.hero_description ? (
-                                <HeroDescription text={content.hero_description} />
-                            ) : null}
-                            
-                            {(content.hero_cta_primary || content.hero_cta_secondary) && (
-                                <HeroActions
-                                    primary={{
-                                        label: content.hero_cta_primary,
-                                        route: content.hero_cta_primary_route,
-                                    }}
-                                    secondary={{
-                                        label: content.hero_cta_secondary,
-                                        route: content.hero_cta_secondary_route,
-                                    }}
-                                />
-                            )}
-                            
-                            {children ? (
-                                <div className="mt-10">
-                                    {children}
-                                </div>
-                            ) : null}
-                        </div>
+                    </h1>
+
+                    {/* Subtitle */}
+                    {description && (
+                        <p className="mt-6 text-lg sm:text-xl text-body leading-relaxed max-w-2xl animate-fade-up">
+                            {description}
+                        </p>
+                    )}
+
+                    {/* CTA Actions */}
+                    <div className="mt-8 flex flex-wrap items-center gap-4 animate-fade-up">
+                        <Link
+                            href={primaryCtaHref || `/${locale}/contact`}
+                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-semibold text-sm shadow-sm hover:bg-primary-hover transition-all duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                        >
+                            {primaryCtaText || t('Get Started')}
+                            <Icon name="arrow_forward" className="ml-2 text-base" />
+                        </Link>
+
+                        <Link
+                            href={secondaryCtaHref || `/${locale}/about`}
+                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-border bg-surface text-heading font-semibold text-sm hover:border-border-strong hover:bg-surface-subtle transition-all duration-150"
+                        >
+                            {secondaryCtaText || t('Learn More')}
+                        </Link>
                     </div>
+
+                    {children}
                 </div>
             </div>
         </section>
     );
 }
-

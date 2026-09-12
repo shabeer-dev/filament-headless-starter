@@ -1,7 +1,7 @@
 import { usePage } from '@inertiajs/react';
 
 export function useTranslation() {
-    const { translations } = usePage<any>().props;
+    const { translations, locale = 'en' } = usePage<any>().props;
 
     const t = (key: string, replacements: Record<string, string> = {}) => {
         let translation = translations?.[key] || key;
@@ -17,5 +17,5 @@ export function useTranslation() {
         return translation;
     };
 
-    return { t };
+    return { t, locale: (locale as string) || 'en' };
 }

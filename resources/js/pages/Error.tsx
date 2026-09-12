@@ -66,8 +66,10 @@ export default function Error({ status, support }: ErrorProps) {
 
                 <div className="relative z-10 text-center px-4 max-w-2xl mx-auto flex flex-col items-center mt-26">
                     {status === 503 ? (
-                        <div className="mb-12 flex justify-center">
-                            <img src="/images/logo.png" alt="Orbiz Automotivez" className="h-12 md:h-16 w-auto drop-shadow-xl" />
+                        <div className="mb-12 flex items-center justify-center gap-2">
+                            <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-white font-black text-2xl">
+                                H
+                            </div>
                         </div>
                     ) : (
                         <div className="text-[120px] md:text-[180px] font-display font-black leading-none text-transparent bg-clip-text bg-linear-to-b from-primary to-primary/20 my-4 drop-shadow-[0_0_30px_rgba(var(--color-primary),0.3)]">

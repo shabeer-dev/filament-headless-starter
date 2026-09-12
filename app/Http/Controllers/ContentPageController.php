@@ -15,7 +15,7 @@ abstract class ContentPageController extends Controller
     abstract protected function model(): string;
 
     /**
-     * The Inertia component name to render (e.g. 'Home', 'Products/HSRP').
+     * The Inertia component name to render (e.g. 'Home', 'About').
      */
     abstract protected function component(): string;
 

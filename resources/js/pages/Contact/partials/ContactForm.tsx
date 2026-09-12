@@ -137,41 +137,22 @@ export default function ContactForm() {
                                     defaultValue={defaultSegment}
                                 >
                                     <option value="">
-                                        {t('SELECT SEGMENT…')}
+                                        {t('Select Inquiry Topic…')}
                                     </option>
-                                    <option value="hsrp">
-                                        {t(
-                                            'High Security Registration Plates (HSRP)',
-                                        )}
+                                    <option value="general">
+                                        {t('General Inquiry')}
                                     </option>
-                                    <option value="hsrp-safeguards">
-                                        {t('HSRP Safeguards')}
+                                    <option value="enterprise">
+                                        {t('Enterprise Solutions')}
                                     </option>
-                                    <option value="international-plates">
-                                        {t('International License Plates')}
+                                    <option value="technical">
+                                        {t('Technical Architecture & API')}
                                     </option>
-                                    <option value="signages">
-                                        {t('Signages (Orbiz Signz)')}
+                                    <option value="partnership">
+                                        {t('Partnership & Integration')}
                                     </option>
-                                    <option value="vltd">
-                                        {t('Vehicle Location Tracking Devices')}
-                                    </option>
-                                    <option value="fun-plates">
-                                        {t('Fun Plates — Custom / Decorative')}
-                                    </option>
-                                    <option value="embossing-tools">
-                                        {t('Embossing Tools & Foils')}
-                                    </option>
-                                    <option value="production-machinery">
-                                        {t(
-                                            'Production Line Machines & Accessories',
-                                        )}
-                                    </option>
-                                    <option value="rfid-technology">
-                                        {t('RFID Technology')}
-                                    </option>
-                                    <option value="general-enquiry">
-                                        {t('General Enquiry')}
+                                    <option value="consulting">
+                                        {t('Support & Consulting')}
                                     </option>
                                 </Select>
                                 {errors.segment ? (

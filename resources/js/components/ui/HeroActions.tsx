@@ -1,7 +1,5 @@
 import Button from '@/components/ui/Button';
 import * as routes from '@/routes';
-import { usePage } from '@inertiajs/react';
-import { getSegmentFromUrl } from '@/lib/utils';
 
 export interface ActionItem {
     label?: string | null;
@@ -23,7 +21,6 @@ export default function HeroActions({
 }: HeroActionsProps) {
     const hasPrimary = Boolean(primary?.label);
     const hasSecondary = Boolean(secondary?.label);
-    const { url: currentUrl } = usePage();
 
     if (!hasPrimary && !hasSecondary) return null;
 
@@ -32,17 +29,8 @@ export default function HeroActions({
         if (action.route) {
             url = (routes as any)[action.route]?.url() || '#';
         }
-        
-        let finalParams = action.params;
-        if (!finalParams && url.includes('/contact')) {
-            const segment = getSegmentFromUrl(currentUrl);
-            if (segment) finalParams = { segment };
-        }
 
-        if (action.route === 'careers' && currentUrl.includes('/careers')) {
-            return '#openings';
-        }
-
+        const finalParams = action.params;
         if (finalParams && url !== '#') {
             const separator = url.includes('?') ? '&' : '?';
             const queryStr = new URLSearchParams(finalParams).toString();
