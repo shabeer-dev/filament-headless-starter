@@ -74,8 +74,35 @@ class InstallStarterCommand extends Command
 
     protected function ensureApplicationKey(): void
     {
-        if (empty(config('app.key'))) {
-            Artisan::call('key:generate', ['--force' => true]);
+        $envPath = base_path('.env');
+        $key = config('app.key');
+
+        // Check if .env has a key that was not loaded into current process memory
+        if (empty($key) && File::exists($envPath)) {
+            if (preg_match('/^APP_KEY=(.+)$/m', File::get($envPath), $matches)) {
+                $candidate = trim($matches[1]);
+                if (! empty($candidate)) {
+                    $key = $candidate;
+                    config(['app.key' => $key]);
+                    app()->forgetInstance('encrypter');
+                }
+            }
+        }
+
+        if (empty($key)) {
+            $newKey = 'base64:'.base64_encode(random_bytes(32));
+            config(['app.key' => $newKey]);
+            app()->forgetInstance('encrypter');
+
+            if (File::exists($envPath)) {
+                $content = File::get($envPath);
+                if (preg_match('/^APP_KEY=.*$/m', $content)) {
+                    File::put($envPath, preg_replace('/^APP_KEY=.*$/m', "APP_KEY={$newKey}", $content));
+                } else {
+                    File::append($envPath, "\nAPP_KEY={$newKey}\n");
+                }
+            }
+
             $this->line(' <info>✓</info> Application key generated');
         }
     }

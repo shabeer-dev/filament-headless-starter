@@ -61,6 +61,8 @@
     },
     "scripts": {
         "setup": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate --ansi",
             "@php artisan starter:install"
         ],
         "dev": [
@@ -97,6 +99,8 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate --ansi",
             "@php artisan starter:install"
         ],
         "pre-package-uninstall": [
@@ -108,6 +112,8 @@
             "dont-discover": [],
             "installer": {
                 "post-create-project": [
+                    "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+                    "@php artisan key:generate --ansi",
                     "@php artisan starter:install"
                 ]
             }
